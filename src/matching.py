@@ -73,10 +73,10 @@ def matching(n, hospitalList, studentList):
         else:  
            pass
     
-    for i in range(n):
-        print(f"{i + 1} {hospital_matches[i] + 1}")
-             
-        
+    with open("data/example.out", "w") as f:
+        for i in range(n):
+            print(f"{i + 1} {hospital_matches[i] + 1}", file=f)
+
 def main():
     n, hospitalList, studentList = parsefile("data/example.in")
     matching(n, hospitalList, studentList)
