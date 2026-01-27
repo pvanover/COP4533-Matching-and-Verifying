@@ -131,6 +131,56 @@ def read_output(filename, n):
     
     return hospital_matches
         
+# helper function to build an array to easily check all matches to keep shorter runtime
+def array_from_matches(hospital_matches, n):
+    student_matches = [None] * n
+    for h in range(n):
+        s = hospital_matches[h]
+        student_matches[s] = h
+    return student_matches
+
+'''
+blocking if
+hospital h prefers student more than student its currently assigned to
+AND student prefers hospital more than hospital its currently assigned to
+'''
+# creating a function to find the position of the hospital in the students preference list
+# if its lower then preferred
+def student_rank(studentList):
+    n = len(studentList)
+    student_rank = [[0] * n for _ in range(n)]
+    for s in range(n):
+        for position, hospital_label in enumerate(studentList[s]):
+            hospital_index = hospital_label - 1
+            student_rank[s][hospital_index] = position
+    return student_rank
+
+# this is the position of student in the hospitals preference list
+def hospital_rank(hospitalList):
+    n = len(hospitalList)
+    hospital_rank = [[0] * n for _ in range(n)]
+    for h in range(n):
+        for position, student_label in enumerate(hospitalList[h]):
+            student_index = student_label - 1
+            hospital_rank[h][student_index] = position
+    return hospital_rank
+
+def check_blocking_pairs(n, hospitalList, studentList, hospital_matches):
+    student_matches = array_from_matches(hospital_matches, n)
+    student_position = student_rank(studentList)
+
+    for h in range(n):
+        assigned_student = hospital_matches[h]
+        for student_label in hospitalList[h]:
+            s = student_label - 1
+            if s == assigned_student:
+                break
+            current_assigned_hospital = student_matches[s]
+
+            if student_position[s][h] < student_position[s][current_assigned_hospital]:
+                return (h,s)
+    return None
+
 
 
 def main():
@@ -140,19 +190,6 @@ def main():
     test = read_output("data/example.out", n)
     print("Parsed hospital matches from output:", test)
 
-    ''''
-    dup_test = read_output("data/duplicate_student.out", n)
-    print("Testing duplicate student match:", dup_test)
-
-    dup_hosp_test = read_output("data/duplicate_hospital.out", n)
-    print("Testing duplicate hospital match:", dup_hosp_test)
-
-    bad_lines = read_output("data/wrong_num_lines.out", n)
-    print("Testing wrong number of lines:", bad_lines)
-
-    bad_range = read_output("data/bad_range.out", n)
-    print("Testing out of range indices:", bad_range)
-    '''
     
 if __name__ == "__main__":
     main()        
