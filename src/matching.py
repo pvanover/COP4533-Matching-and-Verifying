@@ -39,8 +39,8 @@ def parsefile(filename):
 
     return n, hospitalList, studentList
 
-
-def matching(n, hospitalList, studentList):
+#trying to add output file to see if it works with any file not just 
+def matching(n, hospitalList, studentList, outputfile):
     if n is None or hospitalList is None or studentList is None:
         print("invalid input")
         return
@@ -73,7 +73,8 @@ def matching(n, hospitalList, studentList):
         else:  
            pass
     
-    with open("data/example.out", "w") as f:
+    # trying to use output file to see if it works with every file
+    with open(outputfile, "w") as f:
         for i in range(n):
             print(f"{i + 1} {hospital_matches[i] + 1}", file=f)
 
@@ -168,28 +169,51 @@ def hospital_rank(hospitalList):
 def check_blocking_pairs(n, hospitalList, studentList, hospital_matches):
     student_matches = array_from_matches(hospital_matches, n)
     student_position = student_rank(studentList)
+    hospital_position = hospital_rank(hospitalList)
 
     for h in range(n):
         assigned_student = hospital_matches[h]
         for student_label in hospitalList[h]:
             s = student_label - 1
             if s == assigned_student:
-                break
-            current_assigned_hospital = student_matches[s]
+                continue
 
-            if student_position[s][h] < student_position[s][current_assigned_hospital]:
-                return (h,s)
+            if hospital_position[h][s] < hospital_position[h][assigned_student]:
+                assigned_hospital = student_matches[s]
+                if student_position[s][h] < student_position[s][assigned_hospital]:
+                    return (h, s)
     return None
 
+def final_check(inputfile, outputfile):
+    n, hospitalList, studentList = parsefile(inputfile)
+    if n is None:
+        print("INVALID: input file is bad")
+        return
+    hospital_matches = read_output(outputfile, n)
+    if hospital_matches is None:
+        return
+    bp = check_blocking_pairs(n, hospitalList, studentList, hospital_matches)
+    if bp is None:
+        print("VALID STABLE")
+    else:
+        h, s = bp
+        print(f"UNSTABLE: blocking pair ({h+1}, {s+1})")
 
 
 def main():
+    '''
     n, hospitalList, studentList = parsefile("data/example.in")
     matching(n, hospitalList, studentList)
 
     test = read_output("data/example.out", n)
     print("Parsed hospital matches from output:", test)
-
+    '''
+    inputfile = "data/unstable_example.in"
+    outputfile = "data/unstable_example.out"
+    # n, hospitalList, studentList = parsefile(inputfile)
+    # matching(n, hospitalList, studentList, outputfile)
+    final_check(inputfile, outputfile)
+    
     
 if __name__ == "__main__":
     main()        
