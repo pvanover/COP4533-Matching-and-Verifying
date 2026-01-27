@@ -77,11 +77,83 @@ def matching(n, hospitalList, studentList):
         for i in range(n):
             print(f"{i + 1} {hospital_matches[i] + 1}", file=f)
 
+    
+def read_output(filename, n):
+    try:
+        with open(filename, 'r') as f:
+            lines = [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        print("INVALID: output file not found")
+        return None
+    
+    if len(lines) != n:
+        print("INVALID: output file has incorrect number of lines")
+        return None
+    
+    hospital_matches = [None] * n
+    seen_hospitals = set()
+    seen_students = set()
+
+    for line in lines:
+        parts = line.split()
+        if len(parts) != 2:
+            print("INVALID: line format is incorrect")
+            return None
+        try:
+            i = int(parts[0])
+            j = int(parts[1])
+        except ValueError:
+            print("INVALID: non-integer values are in output")
+            return None
+        
+        if not (1 <= i <= n):
+            print("INVALID: hospital's index out of range")
+            return None
+        if not (1 <= j <= n):
+            print("INVALID: student's index out of range")
+            return None
+        
+        if i in seen_hospitals:
+            print("INVALID: hospital is matched more than once")
+            return None
+        seen_hospitals.add(i)
+
+        if j in seen_students:
+            print("INVALID: student is matched more than once")
+            return None
+        seen_students.add(j)
+
+        hospital_matches[i - 1] = j - 1
+
+    if any(x is None for x in hospital_matches):
+        print("INVALID: some hospitals are unmatched")
+        return None
+    
+    return hospital_matches
+        
+
+
 def main():
     n, hospitalList, studentList = parsefile("data/example.in")
     matching(n, hospitalList, studentList)
 
+    test = read_output("data/example.out", n)
+    print("Parsed hospital matches from output:", test)
 
+    ''''
+    dup_test = read_output("data/duplicate_student.out", n)
+    print("Testing duplicate student match:", dup_test)
+
+    dup_hosp_test = read_output("data/duplicate_hospital.out", n)
+    print("Testing duplicate hospital match:", dup_hosp_test)
+
+    bad_lines = read_output("data/wrong_num_lines.out", n)
+    print("Testing wrong number of lines:", bad_lines)
+
+    bad_range = read_output("data/bad_range.out", n)
+    print("Testing out of range indices:", bad_range)
+    '''
+    
 if __name__ == "__main__":
     main()        
         
