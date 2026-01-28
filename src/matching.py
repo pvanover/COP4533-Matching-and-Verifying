@@ -1,3 +1,6 @@
+from time import time
+
+
 def parsefile(filename):
     try:
         with open(filename, 'r') as f:
@@ -73,7 +76,6 @@ def matching(n, hospitalList, studentList, outputfile):
         else:  
            pass
     
-    # trying to use output file to see if it works with every file
     with open(outputfile, "w") as f:
         for i in range(n):
             print(f"{i + 1} {hospital_matches[i] + 1}", file=f)
@@ -200,7 +202,26 @@ def final_check(inputfile, outputfile):
         print(f"UNSTABLE: blocking pair ({h+1}, {s+1})")
 
 
+#delete this main and uncomment other main after testing run time
+from time import perf_counter, sleep
+
+
 def main():
+    sleep(5)
+
+    start_time = perf_counter()
+
+    inputfile = "data/512n.in"
+    outputfile = "data/512n.out"
+
+    n, hospitalList, studentList = parsefile(inputfile)
+    matching(n, hospitalList, studentList, outputfile)
+
+    passed_time = perf_counter() - start_time
+
+    print(f"It took {passed_time}")
+
+#def main():
     '''
     n, hospitalList, studentList = parsefile("data/example.in")
     matching(n, hospitalList, studentList)
@@ -208,11 +229,14 @@ def main():
     test = read_output("data/example.out", n)
     print("Parsed hospital matches from output:", test)
     '''
-    inputfile = "data/unstable_example.in"
-    outputfile = "data/unstable_example.out"
-    # n, hospitalList, studentList = parsefile(inputfile)
-    # matching(n, hospitalList, studentList, outputfile)
-    final_check(inputfile, outputfile)
+    
+ #   inputfile = "data/64n.in"
+ #   outputfile = "data/64n.out"
+ #   start_time = time.time()
+ #   n, hospitalList, studentList = parsefile(inputfile)
+ #   matching(n, hospitalList, studentList, outputfile)
+ #   print("Process finished --- %s seconds ---" % (time.time() - start_time))
+    #final_check(inputfile, outputfile)
     
     
 if __name__ == "__main__":
