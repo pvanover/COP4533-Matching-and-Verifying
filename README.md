@@ -12,8 +12,8 @@ Paige Vanover UFID : 22473613
 
 1. Clone the repository into your desired Python supported IDE.
 2. Run matching.py in the src folder.
-3. If you want to change the file input, edit the main function in the matching.py file and change the file path in the parsefile parameter to your desired file to be read.
-4. Results of macthing algorithm will be populated in the data folder in the file example.out
+3. If you want to change the file input, edit the input file variable in the main function in the matching.py file.
+4. Results of macthing algorithm will be populated in the data folder in the file indicated of your choosing in the variable output file.
 
 Runtime Graph for Gale-Shapley
 <img width="789" height="404" alt="image" src="https://github.com/user-attachments/assets/e45b3a7e-42eb-4630-b67b-ad88e8123ba1" />
