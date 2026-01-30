@@ -37,5 +37,6 @@ The verifier will check exisiting .out files including edge cases
 <img width="789" height="404" alt="image" src="https://github.com/user-attachments/assets/e45b3a7e-42eb-4630-b67b-ad88e8123ba1" />
 
 ### Runtime Graph for verifier + stability checking
+<img width="468" height="249" alt="image" src="https://github.com/user-attachments/assets/c8170438-3269-4a9d-a636-b3e6d442e64f" />
 
 - After running the inputs on the verifier function, a graph was made to see the pattern with an increasing size n. From the graph, it can be seen that for inputs size n = 1 to n = 16, the verifier had an extremely low runtime and appears on the graph as almost flat. As n increases, the runtime begins to increase a little bit more noticeably, especially when we reach around input size n = 64. The runtime increases the most with larger inputs like n = 128, 256, 512. When run, the verifier builds the matrices using functions student_rank and hospital_rank, then it checks for blocking pairs using the blocking pairs function. After that, it performs the final check tying everything together. Since the steps are executed together, the verifiers time complexity can be seen as O(n^2). 
