@@ -207,11 +207,11 @@ def final_check(inputfile, outputfile):
 # matcher will make the output file and then use verifier to check if its a stable match
 # verifier will check edge cases using just .out files, nothing needs to be changed in main for this section, just change TEST = "verifier"
 # do not run matching() with the verifier because will overwrite .out files
-TEST = "verifier"
+TEST = "matcher"
     
 def main():
     if TEST == "matcher":
-        # change these file names to test other files
+        # change these file names to test other files in data folder
         # ex: inputfile = "data/8n.in" // outputfile = "data/8n.out"
         print("Running matcher test:\n")
         inputfile = "data/example.in"
@@ -219,7 +219,7 @@ def main():
         print(f"Running matcher on {inputfile}, outputting to {outputfile}\n")
         n, hospitalList, studentList = parsefile(inputfile)
         matching(n, hospitalList, studentList, outputfile)
-        print("Checking stability of the produced matching using verifier function:")
+        print("Checking stability of the matching using verifier function:")
         final_check(inputfile, outputfile)
 
     elif TEST == "verifier":
