@@ -18,7 +18,7 @@ The matcher will take the input from inputfile, generate a matching and then wri
     For example -> inputfile = "data/example.in"
                    outputfile = "data/example.out"
 4. Run src/matching.py
-Once this is run, it will write out the matching pairs to a .out file. The verifier will then check that the matchings made are stable/unstable/invalid
+- Once this is run, it will write out the matching pairs to a .out file. The verifier will then check that the matchings made are stable/unstable/invalid
 
 ## To run the verifier
 The verifier will check exisiting .out files including edge cases
@@ -28,8 +28,8 @@ The verifier will check exisiting .out files including edge cases
 2. Scroll down to main and set the "TEST = verifier"
 3. run src/matching.py
 - If want to test another .out file, add file to data and then add line like this to the bottom of verifier
-        final_check(inputfile, "data/NAME_OF_FILE_HERE.out")
-Once this is run, the verifier will report if the matching is VALID STABLE, UNSTABLE: blocking pair (h,s), or INVALID with a reason
+        **final_check(inputfile, "data/NAME_OF_FILE_HERE.out")**
+- Once this is run, the verifier will report if the matching is VALID STABLE, UNSTABLE: blocking pair (h,s), or INVALID with a reason
 
 
 Runtime Graph for Gale-Shapley
