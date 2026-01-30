@@ -81,6 +81,8 @@ def matching(n, hospitalList, studentList, outputfile):
             print(f"{i + 1} {hospital_matches[i] + 1}", file=f)
 
     
+# beginning code for Task B (verifier + stability checker)
+# will be checked using read_output, array_from_matches, student_rank, hospital_rank, check_blocking_pairs, final_check
 def read_output(filename, n):
     try:
         with open(filename, 'r') as f:
@@ -201,44 +203,37 @@ def final_check(inputfile, outputfile):
         h, s = bp
         print(f"UNSTABLE: blocking pair ({h+1}, {s+1})")
 
-
-#delete this main and uncomment other main after testing run time
-from time import perf_counter, sleep
-
-
+# choose either matcher or verifier to run
+# matcher will make the output file and then use verifier to check if its a stable match
+# verifier will check edge cases using just .out files, nothing needs to be changed in main for this section, just change TEST = "verifier"
+# do not run matching() with the verifier because will overwrite .out files
+TEST = "verifier"
+    
 def main():
-    sleep(5)
+    if TEST == "matcher":
+        # change these file names to test other files
+        # ex: inputfile = "data/8n.in" // outputfile = "data/8n.out"
+        print("Running matcher test:\n")
+        inputfile = "data/example.in"
+        outputfile = "data/example.out"
+        print(f"Running matcher on {inputfile}, outputting to {outputfile}\n")
+        n, hospitalList, studentList = parsefile(inputfile)
+        matching(n, hospitalList, studentList, outputfile)
+        print("Checking stability of the produced matching using verifier function:")
+        final_check(inputfile, outputfile)
 
-    start_time = perf_counter()
+    elif TEST == "verifier":
+        print("Running verifier test:\n")
+        inputfile = "data/example.in"
+        print("Running verifier on different .out files to test edge cases:\n")
+        final_check(inputfile, "data/example.out")
+        final_check(inputfile, "data/duplicate_student.out")
+        final_check(inputfile, "data/duplicate_hospital.out")
+        final_check(inputfile, "data/unstable_example.out")
+        final_check(inputfile, "data/wrong_num_lines.out")
+        final_check(inputfile, "data/bad_range.out")
 
-    inputfile = "data/512n.in"
-    outputfile = "data/512n.out"
 
-    n, hospitalList, studentList = parsefile(inputfile)
-    matching(n, hospitalList, studentList, outputfile)
-
-    passed_time = perf_counter() - start_time
-
-    print(f"It took {passed_time}")
-
-#def main():
-    '''
-    n, hospitalList, studentList = parsefile("data/example.in")
-    matching(n, hospitalList, studentList)
-
-    test = read_output("data/example.out", n)
-    print("Parsed hospital matches from output:", test)
-    '''
-    
- #   inputfile = "data/64n.in"
- #   outputfile = "data/64n.out"
- #   start_time = time.time()
- #   n, hospitalList, studentList = parsefile(inputfile)
- #   matching(n, hospitalList, studentList, outputfile)
- #   print("Process finished --- %s seconds ---" % (time.time() - start_time))
-    #final_check(inputfile, outputfile)
-    
-    
 if __name__ == "__main__":
     main()        
         
