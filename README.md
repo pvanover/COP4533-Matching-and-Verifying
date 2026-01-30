@@ -35,6 +35,7 @@ The verifier will check exisiting .out files including edge cases
 
 ### Runtime Graph for Gale-Shapley matching()
 <img width="789" height="404" alt="image" src="https://github.com/user-attachments/assets/e45b3a7e-42eb-4630-b67b-ad88e8123ba1" />
+- After measuring the runtime for different size inputs, it is clear that there is a trend that can be seen as input size increases. For smaller inputs, like n = 1 to around n = 32, the runtime is very low and has extremely small increases between points. As the input size gets larger, the increase in runtime appears to be more noticeable. Here, we see a small increase between n = 32 to n = 64, a larger increase from n = 64 to n = 256, and then an even larger spike from n = 256 to n = 512. The trends seen in the graph can be attributed to an O(n^2) runtime. In the worst case, each hospital could give a proposal to every student which would result in n^2 proposals. As n grows, the number of proposals and checks increase which explains the big spike in the graph with larger input sizes. 
 
 ### Runtime Graph for verifier + stability checking
 <img width="468" height="249" alt="image" src="https://github.com/user-attachments/assets/c8170438-3269-4a9d-a636-b3e6d442e64f" />
